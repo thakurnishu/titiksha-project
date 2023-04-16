@@ -17,7 +17,7 @@ pipeline {
 
         stage('Fetch code') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/thakurnishu/titiksha2023.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/thakurnishu/titiksha-project.git']]])
             }
         }
 
