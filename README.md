@@ -1,4 +1,4 @@
-# Titiksha 2023
+# CICD with Jenkins
 
 Titiksha is the Annual Technical Festival of Shri Mata Vaishno Devi University(SMVDU)
 It's currently the biggest technical fest of Jammu and Kashmir.
