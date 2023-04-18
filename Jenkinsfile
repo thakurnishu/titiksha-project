@@ -30,7 +30,7 @@ pipeline {
         stage('Building image') {
             steps{
                 script {
-                    dockerImage = docker.build "${docker_registry}"
+                    dockerImage = docker.build "${docker_registry}"{imageTag}"
                 }
                 
             }
@@ -40,13 +40,10 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: docker_registryCredential, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                     sh 'docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}'
-                    sh 'docker push ${docker_registry}:latest'
-                    sh 'docker tag ${docker_registry} ${docker_registry}:${imageTag}'
                     sh 'docker push ${docker_registry}:${imageTag}'
                 }
                 
                 sh 'docker rmi ${docker_registry}:${imageTag}'
-                sh 'docker rmi ${docker_registry}:latest'
                 
             }
         }
@@ -68,7 +65,7 @@ pipeline {
                 -var SERVICE_PRINCIPAL_ID=${SERVICE_PRINCIPAL_ID} \
                 -var SERVICE_PRINCIPAL_PASSWORD=${SERVICE_PRINCIPAL_PASSWORD} \
                 -var RESOURCE_GROUP=${RESOURCE_GROUP} \
-                -var CONTAINER_IMAGE=${docker_registry} \
+                -var CONTAINER_IMAGE=${docker_registry}:${imageTag} \
                 -var LOCATION=${LOCATION} -var CONTAINER_NAME=${CONTAINER_NAME} -auto-approve
                 '''
             }
