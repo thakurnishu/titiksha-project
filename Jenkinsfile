@@ -86,9 +86,7 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 sh '''
-                    pwd
                     cd Terraform-scripts
-                    pwd
                     terraform plan -var AZURE_SUBSCRIPTION_ID=${AZURE_SUBSCRIPTION_ID} \
                     -var AZURE_TENANT_ID=${AZURE_TENANT_ID} \
                     -var SERVICE_PRINCIPAL_ID=${SERVICE_PRINCIPAL_ID} \
@@ -97,6 +95,8 @@ pipeline {
                     -var CONTAINER_IMAGE=${docker_registry}:${imageTag} \
                     -var LOCATION=${LOCATION} -var CONTAINER_NAME=${CONTAINER_NAME} \
                     -out="terraform.tfplan"
+
+                    ls 
                     '''
             }
         }
