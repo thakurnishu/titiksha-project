@@ -10,7 +10,7 @@ pipeline {
         docker_registry = "nishant0510/titiksha-test"
         docker_registryCredential = 'docker_id'
         imageTag = "v${env.BUILD_ID}"
-        RESOURCE_GROUP = 'titksha-2023'
+        RESOURCE_GROUP = 'titksha-test'
         CONTAINER_NAME = "titiksha-test"
         LOCATION = "centralindia" 
         AZURE_SUBSCRIPTION_ID = credentials('subscription_id')
