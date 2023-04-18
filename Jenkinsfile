@@ -101,15 +101,21 @@ pipeline {
 
         stage('Terraform Apply') {
             steps {
-                sh 'terraform apply \
+                sh '''
+                    cd Terraform-scripts
+                    terraform apply \
                     -auto-approve \
-                    "terraform.tfplan"'
+                    "terraform.tfplan"
+                    '''
             }
         }
 
         stage('Pushing terraform State') {
             steps {
-                sh 'terraform state push terraform.tfstate'
+                sh '''
+                    cd Terraform-scripts
+                    terraform state push terraform.tfstate
+                '''
             }
         }
     }
