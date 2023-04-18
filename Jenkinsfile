@@ -86,6 +86,7 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 sh '''
+                    pwd
                     terraform plan -var AZURE_SUBSCRIPTION_ID=${AZURE_SUBSCRIPTION_ID} \
                     -var AZURE_TENANT_ID=${AZURE_TENANT_ID} \
                     -var SERVICE_PRINCIPAL_ID=${SERVICE_PRINCIPAL_ID} \
