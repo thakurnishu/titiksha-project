@@ -29,8 +29,3 @@ variable "CONTAINER_NAME" {
 variable "CONTAINER_IMAGE" {
   type = string
 }
-
-
-
-
-

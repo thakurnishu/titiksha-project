@@ -13,11 +13,10 @@ pipeline {
         RESOURCE_GROUP = 'titksha-test'
         CONTAINER_NAME = "titiksha-test"
         LOCATION = "centralindia"
-        STORAGE_NAME = 'testterraformtitiksha'
-        STORAGE_CONTAINER = 'titiksha'
         AZURE_SUBSCRIPTION_ID = credentials('subscription_id')
         AZURE_TENANT_ID = credentials('tenant_id')
         SERVICE_PRINCIPAL_ID = credentials('principal_id')
+        SERVICE_PRINCIPAL_PASSWORD = credentials('principal_password')
         STORAGE_KEY = credentials('azure_storage_key')
     }
     
@@ -55,20 +54,6 @@ pipeline {
         //         sh '''
         //         chmod +x BashScript.sh
         //         ./BashScript.sh
-        //         '''
-
-        //         sh '''
-        //         cd Terraform-scripts
-        //         terraform init
-        //         terraform validate
-                
-        //         terraform apply -var AZURE_SUBSCRIPTION_ID=${AZURE_SUBSCRIPTION_ID} \
-        //         -var AZURE_TENANT_ID=${AZURE_TENANT_ID} \
-        //         -var SERVICE_PRINCIPAL_ID=${SERVICE_PRINCIPAL_ID} \
-        //         -var SERVICE_PRINCIPAL_PASSWORD=${SERVICE_PRINCIPAL_PASSWORD} \
-        //         -var RESOURCE_GROUP=${RESOURCE_GROUP} \
-        //         -var CONTAINER_IMAGE=${docker_registry}:${imageTag} \
-        //         -var LOCATION=${LOCATION} -var CONTAINER_NAME=${CONTAINER_NAME} -auto-approve
         //         '''
         //     }
         // }

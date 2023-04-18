@@ -77,8 +77,8 @@ resource "azurerm_traffic_manager_profile" "titiksha_traffic_manager" {
 
 }
 
-resource "azurerm_traffic_manager_external_endpoint" "example" {
-  name       = "example-endpoint"
+resource "azurerm_traffic_manager_external_endpoint" "container_endpoint" {
+  name       = "Container-Endpoint"
   profile_id = azurerm_traffic_manager_profile.titiksha_traffic_manager.id
   endpoint_location = azurerm_container_group.titiksha_container_group.location
   target     = azurerm_container_group.titiksha_container_group.fqdn
