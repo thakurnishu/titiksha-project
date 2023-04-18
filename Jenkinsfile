@@ -40,8 +40,9 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: docker_registryCredential, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                     sh 'docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}'
-                    sh 'docker push ${docker_registry}:${imageTag}'
                     sh 'docker push ${docker_registry}:latest'
+                    sh 'docker tag ${docker_registry}:${imageTag}'
+                    sh 'docker push ${docker_registry}:${imageTag}'
                 }
                 
                 sh 'docker rmi ${docker_registry}:${imageTag}'
@@ -52,16 +53,16 @@ pipeline {
 
         stage('Running Image in Container instances') {
             steps {
-                sh '''
-                chmod +x BashScript.sh
-                ./BashScript.sh
-                '''
-
                 // sh '''
-                // cd Terraform-scripts
-                // terraform init
-                // terraform validate
+                // chmod +x BashScript.sh
+                // ./BashScript.sh
                 // '''
+
+                sh '''
+                cd Terraform-scripts
+                terraform init
+                terraform validate
+                '''
             }
         }
     }

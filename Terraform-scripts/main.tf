@@ -1,26 +1,26 @@
 provider "azurerm" {
-    subscription_id = "${AZURE_SUBSCRIPTION_ID}"
-    client_id       = "${SERVICE_PRINCIPAL_ID}"
-    client_secret   = "${SERVICE_PRINCIPAL_PASSWORD}"
-    tenant_id       = "${AZURE_TENANT_ID}"
+    subscription_id = var.AZURE_SUBSCRIPTION_ID
+    client_id       = var.SERVICE_PRINCIPAL_ID
+    client_secret   = var.SERVICE_PRINCIPAL_PASSWORD
+    tenant_id       = var.AZURE_TENANT_ID
     features {}
 }
 
 resource "azurerm_resource_group" "resourceForContainer" {
-  name     = "${RESOURCE_GROUP}"
-  location = "${LOCATION}"
+  name     = var.RESOURCE_GROUP
+  location = var.LOCATION
 }
 
 resource "azurerm_container_group" "example" {
-  name                = "${CONTAINER_NAME}"
+  name                = var.CONTAINER_NAME
   location            = "${azurerm_resource_group.resourceForContainer.location}"
   resource_group_name = "${azurerm_resource_group.resourceForContainer.name}"
-  dns_name_label      = "${CONTAINER_NAME}"
+  dns_name_label      = var.CONTAINER_NAME
   ip_address_type     = "Public"
   os_type = "Linux"
 
   container {
-    name   = "${CONTAINER_NAME}"
+    name   = var.CONTAINER_NAME
     image  = "nishant5010"
     cpu    = "1.0"
     memory = "1.5"
