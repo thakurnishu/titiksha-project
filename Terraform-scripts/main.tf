@@ -56,7 +56,7 @@ resource "azurerm_container_group" "titiksha_container_group" {
 
 resource "azurerm_traffic_manager_profile" "titiksha_traffic_manager" {
   name                   = "titiksha"
-  resource_group_name    = azurerm_resource_group.titiksha_group.name
+  resource_group_name    = azurerm_resource_group.resourceForContainer.name
   traffic_routing_method = "Performance"
 
   dns_config {
