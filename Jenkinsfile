@@ -75,12 +75,14 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                sh 'terraform init
+                sh '''
+                    terraform init
                     terraform init \
                     -backend-config="storage_account_name=${STORAGE_NAME}" \
                     -backend-config="container_name=${CONTAINER_NAME}" \
                     -backend-config="access_key=${STORAGE_KEY}" \
-                    -backend-config="key=terraform.tfstate"'
+                    -backend-config="key=terraform.tfstate"
+                    '''
             }
         }
 
