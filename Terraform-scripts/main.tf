@@ -21,7 +21,7 @@ resource "azurerm_container_group" "example" {
 
   container {
     name   = "${CONTAINER_NAME}"
-    image  = "${docker_registry}:${imageTag}"
+    image  = "nishant5010"
     cpu    = "1.0"
     memory = "1.5"
 

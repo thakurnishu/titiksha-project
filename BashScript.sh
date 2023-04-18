@@ -7,5 +7,5 @@ az container delete --name ${CONTAINER_NAME} --resource-group ${RESOURCE_GROUP} 
 sleep 10
 
 az container create --name ${CONTAINER_NAME} --resource-group ${RESOURCE_GROUP} \
---cpu 1 --memory 1.5  --location ${LOCATION} --image ${docker_registry}:${imageTag} \
+--cpu 1 --memory 1.5  --location ${LOCATION} --image ${docker_registry} \
 --ip-address Public --dns-name-label ${CONTAINER_NAME} --ports 80
