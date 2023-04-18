@@ -21,7 +21,7 @@ resource "azurerm_container_group" "example" {
 
   container {
     name   = var.CONTAINER_NAME
-    image  = "nishant5010"
+    image  = var.CONTAINER_IMAGE
     cpu    = "1.0"
     memory = "1.5"
 

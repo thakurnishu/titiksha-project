@@ -25,3 +25,7 @@ variable "LOCATION" {
 variable "CONTAINER_NAME" {
   type = string
 }
+
+variable "CONTAINER_IMAGE" {
+  type = string
+}
