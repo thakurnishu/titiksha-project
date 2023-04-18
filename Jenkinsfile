@@ -30,7 +30,7 @@ pipeline {
         stage('Building image') {
             steps{
                 script {
-                    dockerImage = docker.build "${docker_registry}"{imageTag}"
+                    dockerImage = docker.build "${docker_registry}:${imageTag}"
                 }
                 
             }
