@@ -30,14 +30,7 @@ variable "CONTAINER_IMAGE" {
   type = string
 }
 
-variable "STORAGE_NAME" {
-  type = string
-}
 
-variable "STORAGE_KEY" {
-  type = string
-}
 
-variable "STORAGE_CONTAINER" {
-  type = string
-}
+
+
