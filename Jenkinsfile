@@ -27,29 +27,29 @@ pipeline {
             }
         }
 
-        stage('Building image') {
-            steps{
-                script {
-                    dockerImage = docker.build "${docker_registry}"
-                }
+        // stage('Building image') {
+        //     steps{
+        //         script {
+        //             dockerImage = docker.build "${docker_registry}"
+        //         }
                 
-            }
-        }
+        //     }
+        // }
 
-        stage('Push image') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: docker_registryCredential, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    sh 'docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}'
-                    sh 'docker push ${docker_registry}:latest'
-                    sh 'docker tag ${docker_registry} ${docker_registry}:${imageTag}'
-                    sh 'docker push ${docker_registry}:${imageTag}'
-                }
+        // stage('Push image') {
+        //     steps {
+        //         withCredentials([usernamePassword(credentialsId: docker_registryCredential, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+        //             sh 'docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}'
+        //             sh 'docker push ${docker_registry}:latest'
+        //             sh 'docker tag ${docker_registry} ${docker_registry}:${imageTag}'
+        //             sh 'docker push ${docker_registry}:${imageTag}'
+        //         }
                 
-                sh 'docker rmi ${docker_registry}:${imageTag}'
-                sh 'docker rmi ${docker_registry}:latest'
+        //         sh 'docker rmi ${docker_registry}:${imageTag}'
+        //         sh 'docker rmi ${docker_registry}:latest'
                 
-            }
-        }
+        //     }
+        // }
 
         stage('Running Image in Container instances') {
             steps {
@@ -62,7 +62,7 @@ pipeline {
                 cd Terraform-scripts
                 terraform init
                 terraform validate
-                terraform destroy -auto-approve
+                
                 terraform apply -var AZURE_SUBSCRIPTION_ID=${AZURE_SUBSCRIPTION_ID} \
                 -var AZURE_TENANT_ID=${AZURE_TENANT_ID} \
                 -var SERVICE_PRINCIPAL_ID=${SERVICE_PRINCIPAL_ID} \
