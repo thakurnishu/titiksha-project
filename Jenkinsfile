@@ -86,7 +86,7 @@ pipeline {
             -var-file="terraform.tfvars" \
             -var RESOURCE_GROUP=${RESOURCE_GROUP} \
             -var CONTAINER_IMAGE=${docker_registry}:${imageTag} \
-            -var LOCATION=${LOCATION} -var CONTAINER_NAME=${CONTAINER_NAME}
+            -var LOCATION=${LOCATION} -var CONTAINER_NAME=${CONTAINER_NAME} \
             -out="terraform.tfplan"'
         }
 
