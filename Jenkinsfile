@@ -76,6 +76,7 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 sh '''
+                    cd Terraform-scripts
                     terraform init \
                     -backend-config="access_key=${STORAGE_KEY}" 
                     '''
