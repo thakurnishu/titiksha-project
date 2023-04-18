@@ -74,30 +74,38 @@ pipeline {
         // }
 
         stage('Terraform Init') {
-            sh 'terraform init \
-                -backend-config="storage_account_name=${STORAGE_NAME}" \
-                -backend-config="container_name=${CONTAINER_NAME}" \
-                -backend-config="access_key=${STORAGE_KEY}" \
-                -backend-config="key=terraform.tfstate"'
+            steps {
+                sh 'terraform init \
+                    -backend-config="storage_account_name=${STORAGE_NAME}" \
+                    -backend-config="container_name=${CONTAINER_NAME}" \
+                    -backend-config="access_key=${STORAGE_KEY}" \
+                    -backend-config="key=terraform.tfstate"'
+            }
         }
 
         stage('Terraform Plan') {
-            sh 'terraform plan \
-            -var-file="terraform.tfvars" \
-            -var RESOURCE_GROUP=${RESOURCE_GROUP} \
-            -var CONTAINER_IMAGE=${docker_registry}:${imageTag} \
-            -var LOCATION=${LOCATION} -var CONTAINER_NAME=${CONTAINER_NAME} \
-            -out="terraform.tfplan"'
+            steps {
+                sh 'terraform plan \
+                    -var-file="terraform.tfvars" \
+                    -var RESOURCE_GROUP=${RESOURCE_GROUP} \
+                    -var CONTAINER_IMAGE=${docker_registry}:${imageTag} \
+                    -var LOCATION=${LOCATION} -var CONTAINER_NAME=${CONTAINER_NAME} \
+                    -out="terraform.tfplan"'
+            }
         }
 
         stage('Terraform Apply') {
-            sh 'terraform apply \
-                -auto-approve \
-                "terraform.tfplan"'
+            steps {
+                sh 'terraform apply \
+                    -auto-approve \
+                    "terraform.tfplan"'
+            }
         }
 
         stage('Pushing terraform State') {
-            sh 'terraform state push terraform.tfstate'
+            steps {
+                sh 'terraform state push terraform.tfstate'
+            }
         }
     }
     // post {
