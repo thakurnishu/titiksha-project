@@ -62,6 +62,7 @@ pipeline {
                 cd Terraform-scripts
                 terraform init
                 terraform validate
+                terraform destroy -auto-approve
                 terraform apply -var AZURE_SUBSCRIPTION_ID=${AZURE_SUBSCRIPTION_ID} \
                 -var AZURE_TENANT_ID=${AZURE_TENANT_ID} \
                 -var SERVICE_PRINCIPAL_ID=${SERVICE_PRINCIPAL_ID} \
