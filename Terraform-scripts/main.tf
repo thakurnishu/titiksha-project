@@ -29,7 +29,7 @@ resource "azurerm_resource_group" "resourceForContainer" {
   location = var.LOCATION
 }
 
-resource "azurerm_container_group" "example" {
+resource "azurerm_container_group" "titiksha_container_group" {
   name                = var.CONTAINER_NAME
   location            = "${azurerm_resource_group.resourceForContainer.location}"
   resource_group_name = "${azurerm_resource_group.resourceForContainer.name}"
@@ -53,3 +53,31 @@ resource "azurerm_container_group" "example" {
   ]
 
 }
+
+resource "azurerm_traffic_manager_profile" "titiksha_traffic_manager" {
+  name                   = "titiksha"
+  resource_group_name    = azurerm_resource_group.titiksha_group.name
+  traffic_routing_method = "Performance"
+
+  dns_config {
+    relative_name = "titiksha"
+    ttl           = 100
+  }
+
+  monitor_config {
+    protocol                     = "HTTP"
+    port                         = 80
+    path                         = "/"
+    interval_in_seconds          = 30
+    timeout_in_seconds           = 9
+    tolerated_number_of_failures = 3
+  }
+
+}
+
+# resource "azurerm_traffic_manager_external_endpoint" "example" {
+#   name       = "example-endpoint"
+#   profile_id = azurerm_traffic_manager_profile.example.id
+#   weight     = 100
+#   target     = "www.example.com"
+# }
