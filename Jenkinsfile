@@ -18,38 +18,37 @@ pipeline {
         AZURE_SUBSCRIPTION_ID = credentials('subscription_id')
         AZURE_TENANT_ID = credentials('tenant_id')
         SERVICE_PRINCIPAL_ID = credentials('principal_id')
-        SERVICE_PRINCIPAL_PASSWORD = credentials('principal_password')
         STORAGE_KEY = credentials('azure_storage_key')
     }
     
     stages {
 
-        stage('Fetch code') {
-            steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/thakurnishu/titiksha-project.git']]])
-            }
-        }
+        // stage('Fetch code') {
+        //     steps {
+        //         checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/thakurnishu/titiksha-project.git']]])
+        //     }
+        // }
 
-        stage('Building image') {
-            steps{
-                script {
-                    dockerImage = docker.build "${docker_registry}:${imageTag}"
-                }
+        // stage('Building image') {
+        //     steps{
+        //         script {
+        //             dockerImage = docker.build "${docker_registry}:${imageTag}"
+        //         }
                 
-            }
-        }
+        //     }
+        // }
 
-        stage('Push image') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: docker_registryCredential, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    sh 'docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}'
-                    sh 'docker push ${docker_registry}:${imageTag}'
-                }
+        // stage('Push image') {
+        //     steps {
+        //         withCredentials([usernamePassword(credentialsId: docker_registryCredential, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+        //             sh 'docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}'
+        //             sh 'docker push ${docker_registry}:${imageTag}'
+        //         }
                 
-                sh 'docker rmi ${docker_registry}:${imageTag}'
+        //         sh 'docker rmi ${docker_registry}:${imageTag}'
                 
-            }
-        }
+        //     }
+        // }
 
         // stage('Running Image in Container instances') {
         //     steps {
@@ -77,7 +76,8 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 sh '''
-                    terraform init 
+                    terraform init \
+                    -backend-config="access_key=${STORAGE_KEY}" 
                     '''
             }
         }
