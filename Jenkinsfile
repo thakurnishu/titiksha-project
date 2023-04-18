@@ -109,15 +109,6 @@ pipeline {
                     '''
             }
         }
-
-        stage('Pushing terraform State') {
-            steps {
-                sh '''
-                    cd Terraform-scripts
-                    terraform state push terraform.tfstate
-                '''
-            }
-        }
     }
     // post {
     //     always {
