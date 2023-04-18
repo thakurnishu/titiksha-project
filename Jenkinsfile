@@ -13,7 +13,8 @@ pipeline {
         RESOURCE_GROUP = 'titksha-test'
         CONTAINER_NAME = "titiksha-test"
         LOCATION = "centralindia"
-        STORAGE_NAME = 'titikshaterraformtest'
+        STORAGE_NAME = 'testterraformtitiksha'
+        STORAGE_CONTAINER = 'titiksha'
         AZURE_SUBSCRIPTION_ID = credentials('subscription_id')
         AZURE_TENANT_ID = credentials('tenant_id')
         SERVICE_PRINCIPAL_ID = credentials('principal_id')
