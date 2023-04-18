@@ -23,32 +23,32 @@ pipeline {
     
     stages {
 
-        // stage('Fetch code') {
-        //     steps {
-        //         checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/thakurnishu/titiksha-project.git']]])
-        //     }
-        // }
+        stage('Fetch code') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/thakurnishu/titiksha-project.git']]])
+            }
+        }
 
-        // stage('Building image') {
-        //     steps{
-        //         script {
-        //             dockerImage = docker.build "${docker_registry}:${imageTag}"
-        //         }
+        stage('Building image') {
+            steps{
+                script {
+                    dockerImage = docker.build "${docker_registry}:${imageTag}"
+                }
                 
-        //     }
-        // }
+            }
+        }
 
-        // stage('Push image') {
-        //     steps {
-        //         withCredentials([usernamePassword(credentialsId: docker_registryCredential, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-        //             sh 'docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}'
-        //             sh 'docker push ${docker_registry}:${imageTag}'
-        //         }
+        stage('Push image') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: docker_registryCredential, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    sh 'docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}'
+                    sh 'docker push ${docker_registry}:${imageTag}'
+                }
                 
-        //         sh 'docker rmi ${docker_registry}:${imageTag}'
+                sh 'docker rmi ${docker_registry}:${imageTag}'
                 
-        //     }
-        // }
+            }
+        }
 
         // stage('Running Image in Container instances') {
         //     steps {
@@ -94,26 +94,24 @@ pipeline {
                     -var RESOURCE_GROUP=${RESOURCE_GROUP} \
                     -var CONTAINER_IMAGE=${docker_registry}:${imageTag} \
                     -var LOCATION=${LOCATION} -var CONTAINER_NAME=${CONTAINER_NAME} \
-                    -out="terraform.tfplan"
-
-                    ls 
+                    -out="terraform.tfplan" 
                     '''
             }
         }
 
-        // stage('Terraform Apply') {
-        //     steps {
-        //         sh 'terraform apply \
-        //             -auto-approve \
-        //             "terraform.tfplan"'
-        //     }
-        // }
+        stage('Terraform Apply') {
+            steps {
+                sh 'terraform apply \
+                    -auto-approve \
+                    "terraform.tfplan"'
+            }
+        }
 
-        // stage('Pushing terraform State') {
-        //     steps {
-        //         sh 'terraform state push terraform.tfstate'
-        //     }
-        // }
+        stage('Pushing terraform State') {
+            steps {
+                sh 'terraform state push terraform.tfstate'
+            }
+        }
     }
     // post {
     //     always {
