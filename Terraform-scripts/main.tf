@@ -30,6 +30,8 @@ resource "azurerm_container_group" "example" {
       protocol = "TCP"
     }
   }
-
+  depends_on = [
+    azurerm_resource_group.resourceForContainer
+  ]
 
 }
