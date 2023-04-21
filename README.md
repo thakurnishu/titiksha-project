@@ -110,3 +110,4 @@ Create Azure Cloud Account for free get $200 credits for one month.
 
 * On Browser search <ip-add-jenkins-server>:8080
 * New Page will pop up 
+![App Screenshot](https://www.jenkins.io/doc/book/resources/tutorials/setup-jenkins-01-unlock-jenkins-page.jpg)
