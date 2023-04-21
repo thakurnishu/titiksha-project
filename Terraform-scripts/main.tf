@@ -74,7 +74,9 @@ resource "azurerm_traffic_manager_profile" "titiksha_traffic_manager" {
     timeout_in_seconds           = 9
     tolerated_number_of_failures = 3
   }
-
+depends_on = [
+    azurerm_container_group.titiksha_container_group
+  ]
 }
 
 resource "azurerm_traffic_manager_external_endpoint" "container_endpoint" {
@@ -82,4 +84,8 @@ resource "azurerm_traffic_manager_external_endpoint" "container_endpoint" {
   profile_id = azurerm_traffic_manager_profile.titiksha_traffic_manager.id
   endpoint_location = azurerm_container_group.titiksha_container_group.location
   target     = azurerm_container_group.titiksha_container_group.fqdn
+
+  depends_on = [
+    azurerm_traffic_manager_profile.titiksha_traffic_manager
+  ]
 }
